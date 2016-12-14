@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>flex-grow & flex-shrink</title>
+  <style>
+    .flex-container {
+      display: flex;
+      width: 500px;
+      height: 300px;
+      background-color: aqua;
+    }
+    .a,.b,.c {
+      height: 200px;
+      font-size: 32px;
+    }
+    .a {
+      background-color: olive;
+    }
+    .b {
+      background-color: violet;
+    }
+    .c {
+      background-color: teal;
+    }
+    .flex-grow .a {
+      width: 100px;
+    }
+    .flex-grow .b {
+      width: 150px;
+    }
+    .flex-grow .c {
+      width: 100px;
+    }
+    .gt1 .a {
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
+    .gt1 .b {
+      flex-grow: 2;
+      flex-shrink: 2;
+    }
+    .gt1 .c {
+      flex-grow: 3;
+      flex-shrink: 3;
+    }
+    .lt1 .a {
+      flex-grow: 0.1;
+      flex-shrink: 0.1;
+    }
+    .lt1 .b {
+      flex-grow: 0.2;
+      flex-shrink: 0.2;
+    }
+    .lt1 .c {
+      flex-grow: 0.3;
+      flex-shrink: 0.3;
+    }
+    .flex-shrink .a {
+      width: 150px;
+    }
+    .flex-shrink .b {
+      width: 200px;
+    }
+    .flex-shrink .c {
+      width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <h1>flex-grow 与 flex-shrink 计算方式详解</h1>
+
+  <p>相关文章：</p>
+  <p>注意不要用QQ截图直接测量，由于高分屏及放大可能会不准确，可以打开DevTools查看尺寸或把页面绽放到100%大小后再查看</p>
+
+  <h2>flex-grow 之和大于 1</h2>
+  <section class="flex-container flex-grow gt1">
+    <div class="a">.a<br>125px</div>
+    <div class="b">.b<br>200px</div>
+    <div class="c">.c<br>175px</div>
+  </section>
+  <h2>flex-grow 之和小于 1</h2>
+  <section class="flex-container flex-grow lt1">
+    <div class="a">.a<br>115px</div>
+    <div class="b">.b<br>180px</div>
+    <div class="c">.c<br>145px</div>
+  </section>
+  <h2>flex-shrink 之和大于 1</h2>
+  <section class="flex-container flex-shrink gt1">
+    <div class="a">.a<br>134.5</div>
+    <div class="b">.b<br>158.6</div>
+    <div class="c">.c<br>206.9</div>
+  </section>
+  <h2>flex-shrink 之和小于 1</h2>
+  <section class="flex-container flex-shrink lt1">
+    <div class="a">.a<br>140.69</div>
+    <div class="b">.b<br>175.17</div>
+    <div class="c">.c<br>244.14</div>
+  </section>
+</body>
+</html>

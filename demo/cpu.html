@@ -1,0 +1,7 @@
+<h1>打开任务管理器的 CPU 使用率面板观察 CPU 使用率曲线</h1>
+<script>
+  var used = navigator.hardwareConcurrency - 2
+  for (x of Array(used > 0 ? used : 1)) {
+    new Worker('sin.js')
+  }
+</script>

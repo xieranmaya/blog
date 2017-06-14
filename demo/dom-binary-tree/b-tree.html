@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>用 DOM 展示二叉树 - by 充电大喵</title>
+<style>
+/**{background-color:rgba(0,0,0,0.08)}*/
+
+div.tree {
+  display: flex;
+  flex-wrap: wrap;/*span需要独占一行，所以此flex布局必须要折行显示*/
+  align-items: flex-start;
+}
+
+.tree > .tree {
+  width: 50%;
+}
+
+
+div.tree > span {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 3em;
+  background-image: url(both.svg);
+  background-repeat: no-repeat;
+  background-size: 100% calc(100% - 0);
+  background-position: 0 0;
+}
+
+/*没有后代的子树不再展示连线和多余空间*/
+div.tree > span:only-child {
+  background-image: none;
+  padding-bottom: 0;
+}
+
+/*右/右子树自动往左/右偏*/
+div.left {
+  margin-right: auto;
+}
+div.right {
+  margin-left: auto;
+}
+
+/*只有单边子树的元素，让此单边子树占用90%的空间*/
+div.only-has-left > div.tree {
+  width: 90%;
+  margin-right: auto;
+}
+div.only-has-right > div.tree {
+  width: 90%;
+  margin-left: auto;
+}
+
+/*只有单边子树的元素只显示单边的连线*/
+div.only-has-left > span {
+  background-image: url(left.svg);
+}
+div.only-has-right > span {
+  background-image: url(right.svg);
+}
+
+</style>
+</head>
+<body>
+
+  <h1>用 DOM 展示二叉树 - by 充电大喵</h1>
+
+  请按顺序输入树的结点，用半角逗号隔开：<input type="text" value="[1,2,3,4,5,6,7,8,9]">
+  <section></section>
+  <hr>
+  请按顺序输入树的结点，用半角逗号隔开：<input type="text" value="[1,2,null,4,5,6,7,8,9]">
+  <section></section>
+  <hr>
+  请按顺序输入树的结点，用半角逗号隔开：<input type="text" value="[1,2,3,4,5,null,7,8,9]">
+  <section></section>
+  <hr>
+  请按顺序输入树的结点，用半角逗号隔开：<input type="text" value="[1,2,,4,,,,8,,10,11,,13,14,15,16,,18,19,20]">
+  <section></section>
+  <hr>
+
+  <p>注：输入的内容将会被解析为数组然后按照顺序存储的方式解析为一颗二叉树，即下标为n的结点的两颗子结点分别为2
+n+1和2n+2，下标为m的结点的父结点为Math.floor(m/2)</p>
+</body>
+<script>
+  //将一个顺序存储在数组中的二叉树转换为一个用二叉链表表示的二叉树
+  function ary2tree(ary, root = 0) {
+    if (ary[root] != null) {
+      var rt = {
+        val: ary[root]
+      }
+      rt.left = ary2tree(ary, root * 2 + 1)
+      rt.right = ary2tree(ary, root * 2 + 2)
+      return rt
+    } else {
+      return null
+    }
+  }
+
+  //将一颗二叉树转换为其对应的HTML代码，side表示其为左子树还是右子树
+  //会被添加到其class上
+  function tree2html(root, side='') {
+    if (root) {
+      let leaf = !root.left && !root.right
+      let both = root.left && root.right
+      let onlyLeft = root.left && !root.right
+      let onlyRight = !root.left && root.right
+      return `
+        <div class="tree ${side} ${both?'both':''} ${leaf?'leaf':''} ${onlyLeft?'only-has-left':''} ${onlyRight?'only-has-right':''}">
+          <span>${root.val}</span>
+          ${tree2html(root.left, 'left')}
+          ${tree2html(root.right, 'right')}
+        </div>
+      `
+    } else {
+      return ''
+    }
+  }
+
+  // 将用数组表示的二叉树展示在页面el元素中
+  function showTree(el, ary) {
+    el.innerHTML = tree2html(ary2tree(ary))
+  }
+
+  function onInput() {
+    var aryStr = this.value
+    try {
+      var ary = eval(aryStr)
+    } catch(e){
+      return
+    }
+    showTree(this.nextElementSibling, ary)
+  }
+
+  Array.from(document.querySelectorAll('input'))
+  .map(input => {
+    onInput.call(input)
+    return input
+  }).map(input => {
+    input.addEventListener('input', onInput)
+    return input
+  })
+
+</script>
+</html>

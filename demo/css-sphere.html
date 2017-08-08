@@ -1,0 +1,90 @@
+<div class="coord">
+<script>
+  // z = f(x,y) = sin(x) + cos(y)
+  // 
+  var f = (x,y) => (2*Math.sin(Math.sqrt(x*x + y*y)) + 0*Math.cos(y))///Math.sqrt(x*x + y*y)*3
+  f = (x,y) => (x*x + Math.abs(x*y) + y*y)/20
+  f = (x,y) => 2 * Math.sin(Math.sqrt(x*x+y*y))
+  f = (x,y) => Math.sqrt(100 - x*x-y*y)
+  var ff = (x,y) => -Math.sqrt(100 - x*x-y*y)
+
+  var start = -4 * Math.PI
+  var end = 4 * Math.PI
+  var step = 0.6
+  var factor = 20
+  var z
+  var d = 0.00000001
+  for(var x = start; x <= end; x += step) {
+    for(var y = start; y<=end ;y+=step) {
+      z = f(x,y)
+      document.write(` 
+        <i style="transform:
+          translate3d(${x*factor}px,${y*factor}px,${z*factor}px)
+            rotateY(${-Math.atan((f(x+d,y) - f(x,y))/d)}rad)
+            rotateX(${Math.atan((f(x,y+d) - f(x,y))/d)}rad); 
+          background-color: hsl(${z*150},70%,50%);"></i>
+      `)
+      z = ff(x,y)
+      document.write(` 
+        <i style="transform:
+          translate3d(${x*factor}px,${y*factor}px,${z*factor}px)
+            rotateY(${-Math.atan((ff(x+d,y) - ff(x,y))/d)}rad)
+            rotateX(${Math.atan((ff(x,y+d) - ff(x,y))/d)}rad); 
+          background-color: hsl(${z*150},70%,50%);"></i>
+      `)  
+    }
+  }
+</script>
+</div>
+
+<style>
+  div.coord {
+    width: 1000px;
+    height: 1000px;
+    /*margin: auto;*/
+    /*margin-top: 200px;*/
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    /*background-color: rgba(0,0,0,0.3);*/
+    xtransform: perspective(1000px) rotateX(0deg) rotateZ(0deg);
+    xtransition: 3s linear;
+    transform-style: preserve-3d;
+    animation: spin3d 60s infinite linear;
+    background-image: linear-gradient(to bottom, transparent 49%, red 49%, red 51%, transparent 51%), linear-gradient(to left, transparent 49%, black 49%, black 51%, transparent 51%);
+  }
+  div::before {
+    content: '';
+    width: 1000px;
+    height: 1000px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: rotateX(90deg);
+    background-image: linear-gradient(to left, transparent 49%, brown 49%, brown 51%, transparent 51%);
+  }
+  div:hover {
+    animation-play-state: paused;
+    xtransform: perspective(1000px) rotateX(150deg) rotateZ(400deg);
+  }
+  i {
+    width: 5px;
+    height: 5px;
+    background-color: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+  @keyframes spin3d {
+    from {
+      transform: perspective(1000px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    to {
+      
+      transform: perspective(1000px) rotateX(720deg) rotateY(720deg) rotateZ(720deg);
+    }
+  }
+</style>

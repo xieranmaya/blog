@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h3>输入二进制文本，使用逗号或空格或回车分隔</h3>
+  <textarea id="dec-number" type="text" rows="20" cols="50"></textarea>
+  <button id="trans-btn">提交</button>
+  <script>
+    //点击事件
+    document.getElementById("trans-btn").onclick = function () {
+      var num = document.getElementById("dec-number").value;
+      binary(num)
+    }
+
+
+    function binary(num) {
+      var inputBinary = num.split(/\s*(?:,|，)\s*|\s+/m)
+      inputBinary.map(it => it.trim())
+      console.log(inputBinary)
+      var p = false
+
+      for (let i = 0; i < inputBinary.length; i++) {
+        var target = i.toString(2)
+
+        if (target !== inputBinary[i]) {
+          alert('第' + i + '项有错误')
+          p = true
+          break
+        }
+      }
+
+      if (p == false) {
+        alert('恭喜全部答对')
+      }
+    }
+
+  </script>
+</body>
+
+</html>

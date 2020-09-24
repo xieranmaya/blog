@@ -1,117 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="css/style.css">
   <meta charset="UTF-8">
   <title>CSS Prime</title>
-  <style>
-    body {
-      /*用body元素的counter-reset属性重置三个计数器以使它们的作用域在整个body内*/
-      counter-reset: nature-count prime-count nonprime-count;
-      display: flex;
-      flex-direction: column;
-    }
-
-    li {
-      list-style-type: none;
-      display: inline-block;
-    }
-
-    /*在before伪元素中插入计数器的值以实现数值递增*/
-    li::before {
-      content: counter(nature-count) ',';
-    }
-    li:last-child::before {
-      content: counter(nature-count);/*最后一个元素不需要逗号分隔*/
-    }
-
-    /*合数项选择器*/
-    li:first-child,
-    li:nth-child(2n + 4),
-    li:nth-child(3n + 6),
-    li:nth-child(5n + 10),
-    li:nth-child(7n + 14),
-    li:nth-child(11n + 22),
-    li:nth-child(13n + 26),
-    li:nth-child(17n + 34),
-    li:nth-child(19n + 38),
-    li:nth-child(23n + 46),
-    li:nth-child(29n + 58),
-    li:nth-child(31n + 62) {
-      /*递增自然数与合数计数器*/
-      counter-increment: nature-count nonprime-count;
-      color: #ddd;/*合数变灰*/
-      /*如果想只显示素数项，可以把合数全部隐藏起来*/
-      /*display为none并不影响计数器的计数*/
-      /*display: none;*/
-    }
-    /*素数项选择器*/
-    li:not(:first-child):not(:nth-child(2n + 4)):not(:nth-child(3n + 6)):not(:nth-child(5n + 10)):not(:nth-child(7n + 14)):not(:nth-child(11n + 22)):not(:nth-child(13n + 26)):not(:nth-child(17n + 34)):not(:nth-child(19n + 38)):not(:nth-child(23n + 46)):not(:nth-child(29n + 58)):not(:nth-child(31n + 961)) {
-      /*递增自然数与素数计数器*/
-      counter-increment: nature-count prime-count;
-      color: red;/*素数变红*/
-    }
-
-    p.count {
-      order: -1;/*让p元素显示在ul的前面*/
-    }
-    p.count::before {
-      /*通过p标签的before伪元素插入统计结果*/
-      content: '前 ' counter(nature-count) ' 个自然数中，有 ' counter(nonprime-count) ' 个合数，' counter(prime-count) ' 个素数' ;
-    }
-  </style>
-<!--   <style>
-    body {
-      counter-reset: count prime-count;
-      display: flex;
-      flex-direction: column;
-    }
-    ul {
-      /*text-align: center;*/
-      width: 90%;
-      margin: auto;
-      padding: 0;
-    }
-    li {
-      counter-increment: count;
-      list-style: none;
-      display: inline-block;
-      width: 50px;
-      text-align: right;
-    }
-    li::before {
-      content: counter(count, decimal-leading-zero);
-    }
-    li::after {
-      content: ', ';
-    }
-    li:first-child,
-    li:nth-child(2n + 4),
-    li:nth-child(3n + 6),
-    li:nth-child(5n + 10),
-    li:nth-child(7n + 14),
-    li:nth-child(11n + 22),
-    li:nth-child(13n + 26),
-    li:nth-child(17n + 34),
-    li:nth-child(19n + 38),
-    li:nth-child(23n + 46),
-    li:nth-child(29n + 58),
-    li:nth-child(31n + 62) {
-      color: #ddd;
-    }
-
-    li:not(:first-child):not(:nth-child(2n + 4)):not(:nth-child(3n + 6)):not(:nth-child(5n + 10)):not(:nth-child(7n + 14)):not(:nth-child(11n + 22)):not(:nth-child(13n + 26)):not(:nth-child(17n + 34)):not(:nth-child(19n + 38)):not(:nth-child(23n + 46)):not(:nth-child(29n + 58)):not(:nth-child(31n + 961)) {
-      color: red;
-      counter-increment: count prime-count;
-      /*font-size: 50px;*/
-    }
-
-    .count {
-      order: -1;
-    }
-    .count::before {
-      content: '前 ' counter(count) ' 个自然数中，共有 ' counter(prime-count) ' 个素数';
-    }
-  </style> -->
 </head>
 <body>
   <p style="order:-2">使用纯CSS进行素数的判定与筛选。实现细节相关博文：<a href="https://zhuanlan.zhihu.com/p/24718254">https://zhuanlan.zhihu.com/p/24718254</a></p>
@@ -1124,7 +1016,7 @@ var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?2243d09d24f5e80836f6b9d3a08d9fb0";
-  var s = document.getElementsByTagName("script")[0]; 
+  var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>

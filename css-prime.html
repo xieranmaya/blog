@@ -12,6 +12,8 @@
     }
 
     li {
+      width: 2.5em;
+      text-align: right;
       list-style-type: none;
       display: inline-block;
     }
@@ -39,7 +41,7 @@
     li:nth-child(31n + 62) {
       /*递增自然数与合数计数器*/
       counter-increment: nature-count nonprime-count;
-      color: #ddd;/*合数变灰*/
+      color: #333;/*合数变灰*/
       /*如果想只显示素数项，可以把合数全部隐藏起来*/
       /*display为none并不影响计数器的计数*/
       /*display: none;*/

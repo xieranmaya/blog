@@ -11,7 +11,7 @@
   var start = -6
   var end = 6
   var step = 0.25
-  var factor = 100
+  var factor = 40
   var z
   var d = 0.00000001
   for(var x = start; x <= end; x += step) {
@@ -22,7 +22,7 @@
 
           document.write(`
             <i style="transform:
-              translate3d(${x*factor}px,${y*factor}px,${z*factor}px);
+              translate3d(${x*factor}px,${y*factor}px,${z*factor}px) scale(2);
               background-color: hsl(${z*150},70%,50%);"></i>
             `)
               // rotateX(${Math.random() < 0.5 ? 90 : 0}deg) rotateY(${Math.random() < 0.5 ? 90 : 0}deg);
@@ -73,6 +73,20 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    transform-style: preserve-3d;
+  }
+  i::before,i::after {
+    /* content: ''; */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+  }
+  i::before {
+    transform: rotatex(90deg);
+  }
+  i::after {
+    transform: rotatey(90deg);
   }
   @keyframes spin3d {
     from {
